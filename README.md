@@ -26,7 +26,6 @@ The hook comes ready to use, but if you use the Request object to determine the 
 
 ```javascript
 module.exports.multitenancy = function(req){
-    const Tenants = sails.models.tenants;
     // The function need return a Promise to select the tenant
     return new Promise(async (resolve, reject) => {
         // The code was here
@@ -38,17 +37,24 @@ module.exports.multitenancy = function(req){
         // const datasourse = {
         //   "host": #####, (String - The host of datasource)
         //   "port": #####, (Number - The port of datasource)
-        //   "schema": ######, (Boolean - Determine if the datasource use schameas in the tables or is a schamless datasource)
-        //   "adapter": ######, (String - Indicates the driver use for the datasource. Example: sails-mysql) 
+        //   "schema": ######, (Boolean - Determine if the datasource use schameas 
+        //   in the tables or is a schamless datasource)
+        //   "adapter": ######, (String - Indicates the driver use for 
+        //   the datasource. Example: sails-mysql) 
         //   "user": ######, (String - Indicates the user of datasource)
         //   "password": ######, (String - Indicates the password of datasource)
         //   "database": ######, (String - Indicates the name of database in datasource)
         //   "identity": ###### (String - Indicate the name of datasource)
         // }
+        //
+        // ********************************************************
         // Or you can use the datasource object provided by the hook
         // Import to use in the function
         // const _datasource = require('sails-hook-multitenant/datasource');
-        // const datasource = new _datasource(host, port, schema, adapter, user, password, database, identity);
+        // ....
+        // ....
+        // const datasource = new _datasource(host, port, schema, adapter,
+        // user, password, database, identity);
         // ....
         resolve(datasource);
     });
