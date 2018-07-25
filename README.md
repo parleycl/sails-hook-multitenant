@@ -1,3 +1,4 @@
+![tea love](https://raw.githubusercontent.com/acalvoa/sails-hook-multitenant/master/assets/logo.png)
 # Sails.js 1.0 Multitenant ORM
 
 ## Introduction
