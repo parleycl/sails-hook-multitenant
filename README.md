@@ -110,7 +110,7 @@ module.exports = {
 ```
 If you define you model like multitenant, you have three ways to make an multitenant database calls.
 
-### The Request Object Way
+### 4.1 The Request Object Way
 
 This way is based on the request object handler by each action in the controllers. Each ORM operations is call using in the first argument, the Request Object. The hook automatically recognize this object and use like argument in the **Tenant selector function** previusly configured in the Sails configuration folder.
 
@@ -223,7 +223,7 @@ The result of call the controller should be:
 }
 ```
 
-### The configuration Object Way
+### 4.2 The configuration Object Way
 
 This way is similar to Request Object but the selection of the tenant is handle direct from the controller. The database operations is made with the configuration datasource object all the times.
 
@@ -250,8 +250,8 @@ module.exports = {
     find: async function(req, res) {
         // To make this posible we need create a Datasource configuration
         // Object
-        const datasource = new Datasource("localhost", 3306, true,
-        "sails-mysql", "user", "password", "client1", "client1");
+        const datasource = new Datasource('localhost', 3306, true,
+        'sails-mysql', 'user', 'password', 'client1', 'client1');
         const client = await Client.create(datasource, {
             name: 'client1_config',
             edad: 27
@@ -259,7 +259,7 @@ module.exports = {
         // Call all the clients in the tenant (In this example only one
         // register)
         const clients = await Client.find(datasource);
-        // A normal call to "multitenant" database with the same table
+        // A normal call to 'multitenant' database with the same table
         // But this table is empty
         const test = await Client.find();
         return res.ok({
@@ -285,9 +285,9 @@ The result of call the controller should be:
 }
 ```
 
-### The Datasource creation Way
+### 4.3 The Datasource creation Way
 
-This way is similar to Request Object but the selection of the tenant is handle direct from the controller. The database operations is made with the configuration datasource object all the times.
+This way is similar to Configuration Object but the selection of the tenant is by the name of datasource. To make this posible previusly to database operation call we need add the datasource to the models. The database operations is made with the name of datasource in each operation.
 
 An example of this, with the Client model previusly defined.
 
@@ -310,20 +310,19 @@ const Datasource = require('sails-hook-multitenant/datasource');
 module.exports = {
   
     find: async function(req, res) {
-        // To make this posible we need create a Datasource configuration
-        // Object
-        await Client.addDatasource("client1", {
-            "host": "localhost", 
-            "port": 3306, 
-            "schema": true,
-            "adapter": "sails-mysql",
-            "user": "user", 
-            "password": "password", 
-            "database": "client1" 
+        // To make this posible we need add datasource previusly to use.
+        await Client.addDatasource('client1', {
+            'host': 'localhost', 
+            'port': 3306, 
+            'schema': true,
+            'adapter': 'sails-mysql',
+            'user': 'user', 
+            'password': 'password', 
+            'database': 'client1' 
         });
         // Call the database operation with the identifyer
         const client = await Client.create('client1', {
-            name: 'client1_config',
+            name: 'client1_add_datasource',
             edad: 27
         });
         // Call all the clients in the tenant (In this example only one
@@ -346,7 +345,7 @@ The result of call the controller should be:
     // The array with the client table in the database configured dinamically by the multitenant hook
     client: [
         {
-        "name": "client1_config",
+        "name": "client1_add_datasource",
         "age": 27
         }
     ],
@@ -356,7 +355,10 @@ The result of call the controller should be:
 ```
 
 ## 5. Examples
-An example project for study is in the example folder. If you have any question please contact
+An example project for study is in the example folder. 
+
+If you have any question of how to use, or any question, please contact.
+
 ## 6. Tests
 Follow the Sails documentation, the hook is tested with mocha.
 
