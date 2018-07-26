@@ -72,12 +72,291 @@ Save this code into sails configurtion folder with a name you want, **Example** 
       |_tenancy.js
 ```
 
-
 ## 4. How to use
+
+The hook was build thinkg in three differents uses cases. Each way to use the multi tenant hook make an datasource change by tenant. All models, that want use the multi tenant datasource should have a multitenant boolean propertie equal true defined in the Model Object in order to be multitenant model. If this propertie not exists, the hook ignore this model of  multitenant call. **An example:**
+
+```javascript
+/**
+ * Client.js
+ *
+ * @description :: A model definition.  Represents a database table/collection/etc.
+ * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
+ */
+
+module.exports = {
+
+  attributes: {
+    name: 'string',
+    age: 'number'
+    //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
+    //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
+    //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
+
+
+    //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
+    //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
+    //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
+
+
+    //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
+    //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
+    //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
+
+  },
+  multitenant: true
+};
+
+```
+If you define you model like multitenant, you have three ways to make an multitenant database calls.
+
 ### The Request Object Way
+
+This way is based on the request object handler by each action in the controllers. Each ORM operations is call using in the first argument, the Request Object. The hook automatically recognize this object and use like argument in the **Tenant selector function** previusly configured in the Sails configuration folder.
+
+The **Tenant selector function** return a configuration object that select and configuring the tenant. If the tenant was previsuly used, the hook dont create a new datasource of this tenant and only use this datasource previusly created.
+
+An example of this, with the Client model previusly defined.
+
+```javascript
+/**
+ * ClientController
+ *
+ * @description :: Server-side actions for handling incoming requests.
+ * @help        :: See https://sailsjs.com/docs/concepts/actions
+ */
+
+/*****************************************************************/
+/* Briefing:                                                     */ 
+/* The default database configured in datasource is "multitenant"*/
+/* "client1" database is a tenant database asociate to           */
+/* client1.rockstart.com domain. The tenant database call need   */
+/* use the datasource asign to this domain.                      */
+/*****************************************************************/
+module.exports = {
+  
+    find: async function(req, res) {
+        // To make this posible the Req object have the domain and can be 
+        // associate this domain to select the datasource. In this case we
+        // utilized the Request Object Way.
+        const client = await Client.create(req, {
+            name: 'client1',
+            edad: 24
+        });
+        // Call all the clients in the tenant (In this example only one
+        // register)
+        const clients = await Client.find(req);
+        // A normal call to "multitenant" database with the same table
+        // But this table is empty
+        const test = await Client.find();
+        return res.ok({
+            client: clients,
+            compare: test
+        });
+    }
+};
+```
+The configuration function should be:
+
+```javascript
+/******************************************************************/
+/* Briefing:                                                      */ 
+/* The default database configured in datasource is "multitenant" */
+/* have a table with all Tenant named Tenants. We created a model */
+/* Tenant to get the tenants based on the domain.                 */
+/*                                                                */
+/******************************************************************/
+const Datasource = require('sails-hook-multitenant/datasource');
+
+module.exports.multitenancy = function(req){
+    // We call the tenants model defined in our sails app
+    const Tenants = sails.models.tenants;
+    // this function require return a Promise
+    return new Promise(async (resolve, reject) => {
+        // Search the tenant in the database based on the domain identifier
+        const datasource = await Tenants.findOne({
+            identity: req.hostname
+        });
+        // Return a Datasource object
+        resolve(new Datasource(datasource));
+    });
+}
+```
+
+The Tenant Model should be:
+
+```javascript
+/**
+ * Tenants.js
+ *
+ * @description :: A model definition.  Represents a database table/collection/etc.
+ * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
+ */
+
+module.exports = {
+
+  attributes: {
+    host: 'string',
+    port: 'number',
+    schema: 'boolean',
+    adapter: 'string',
+    user: 'string',
+    password: 'string',
+    database: 'string',
+    identity: 'string'
+  },
+};
+```
+The result of call the controller should be:
+
+```javascript
+{
+    // The array with the client table in the database configured dinamically by the multitenant hook
+    client: [
+        {
+        "name": "client1",
+        "age": 24
+        }
+    ],
+    // The array with the client table in the database configured in sails datasource. Should be 0 regsiters
+    compare: []
+}
+```
+
 ### The configuration Object Way
+
+This way is similar to Request Object but the selection of the tenant is handle direct from the controller. The database operations is made with the configuration datasource object all the times.
+
+An example of this, with the Client model previusly defined.
+
+```javascript
+/**
+ * ClientController
+ *
+ * @description :: Server-side actions for handling incoming requests.
+ * @help        :: See https://sailsjs.com/docs/concepts/actions
+ */
+
+/******************************************************************/
+/* Briefing:                                                      */ 
+/* The default database configured in datasource is "multitenant" */
+/* "client1" database is a tenant database asociate to a client1  */
+/*                                                                */
+/******************************************************************/
+const Datasource = require('sails-hook-multitenant/datasource');
+
+module.exports = {
+  
+    find: async function(req, res) {
+        // To make this posible we need create a Datasource configuration
+        // Object
+        const datasource = new Datasource("localhost", 3306, true,
+        "sails-mysql", "user", "password", "client1", "client1");
+        const client = await Client.create(datasource, {
+            name: 'client1_config',
+            edad: 27
+        });
+        // Call all the clients in the tenant (In this example only one
+        // register)
+        const clients = await Client.find(datasource);
+        // A normal call to "multitenant" database with the same table
+        // But this table is empty
+        const test = await Client.find();
+        return res.ok({
+            client: clients,
+            compare: test
+        });
+    }
+};
+```
+The result of call the controller should be:
+
+```javascript
+{
+    // The array with the client table in the database configured dinamically by the multitenant hook
+    client: [
+        {
+        "name": "client1_config",
+        "age": 27
+        }
+    ],
+    // The array with the client table in the database configured in sails datasource. Should be 0 regsiters
+    compare: []
+}
+```
+
 ### The Datasource creation Way
+
+This way is similar to Request Object but the selection of the tenant is handle direct from the controller. The database operations is made with the configuration datasource object all the times.
+
+An example of this, with the Client model previusly defined.
+
+```javascript
+/**
+ * ClientController
+ *
+ * @description :: Server-side actions for handling incoming requests.
+ * @help        :: See https://sailsjs.com/docs/concepts/actions
+ */
+
+/******************************************************************/
+/* Briefing:                                                      */ 
+/* The default database configured in datasource is "multitenant" */
+/* "client1" database is a tenant database asociate to a client1  */
+/*                                                                */
+/******************************************************************/
+const Datasource = require('sails-hook-multitenant/datasource');
+
+module.exports = {
+  
+    find: async function(req, res) {
+        // To make this posible we need create a Datasource configuration
+        // Object
+        await Client.addDatasource("client1", {
+            "host": "localhost", 
+            "port": 3306, 
+            "schema": true,
+            "adapter": "sails-mysql",
+            "user": "user", 
+            "password": "password", 
+            "database": "client1" 
+        });
+        // Call the database operation with the identifyer
+        const client = await Client.create('client1', {
+            name: 'client1_config',
+            edad: 27
+        });
+        // Call all the clients in the tenant (In this example only one
+        // register)
+        const clients = await Client.find('client1');
+        // A normal call to "multitenant" database with the same table
+        // But this table is empty
+        const test = await Client.find();
+        return res.ok({
+            client: clients,
+            compare: test
+        });
+    }
+};
+```
+The result of call the controller should be:
+
+```javascript
+{
+    // The array with the client table in the database configured dinamically by the multitenant hook
+    client: [
+        {
+        "name": "client1_config",
+        "age": 27
+        }
+    ],
+    // The array with the client table in the database configured in sails datasource. Should be 0 regsiters
+    compare: []
+}
+```
+
 ## 5. Examples
+An example project for study is in the example folder. If you have any question please contact
 ## 6. Tests
 Follow the Sails documentation, the hook is tested with mocha.
 

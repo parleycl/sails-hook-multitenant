@@ -1,6 +1,6 @@
 {
   "name": "sails-hook-multitenant",
-  "version": "0.5.0",
+  "version": "0.5.3",
   "description": "A multi tenancy ORM hook to tranasform Waterline ORM into Multitenant ORM for Sails.js 1.0",
   "main": "index.js",
   "sails": {
@@ -9,5 +9,22 @@
   "devDependencies": {
     "sails": "^1.0.0-46",
     "waterline": "^0.13.4"
+  },
+  "license": "MIT",
+  "keywords": [
+    "Sails.js", 
+    "Waterline", 
+    "Nodejs", 
+    "ORM", 
+    "Multitenant",
+    "Multytenancy"
+  ],
+  "author": {
+    "name": "Angelo Calvo Alfaro",
+    "email": "angelo.calvoa@gmail.com"
+  },
+  "repository" :
+  { "type" : "git"
+  , "url" : "https://github.com/acalvoa/sails-hook-multitenant"
   }
 }
