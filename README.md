@@ -20,7 +20,7 @@ npm install sails-hook-multitenant --save
 # To install with yarn
 yarn install sails-hook-multitenant --save
 ```
-If you want created a new sails project with multitenant
+If you start from scratch and want created a new sails project with multitenant hook
 
 ```bash
 # Create a new sails project
