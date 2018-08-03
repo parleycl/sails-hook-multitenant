@@ -30,7 +30,7 @@ cd project_name
 # To install with npm
 npm install sails-hook-multitenant --save
 # To install with yarn
-yarn install sails-hook-multitenant --save
+yarn add sails-hook-multitenant --save
 # Lift your app
 sails lift
 ```
