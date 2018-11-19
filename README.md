@@ -414,6 +414,7 @@ Made with ❤ in Chile by Rockstart
 
 ## 7. Contributors
 Made with ❤ in Chile by Rockstart.
+Write by Angelo Calvo A (acalvoa)
 
 
 **Knownledge is power, share the Knownledge.**
