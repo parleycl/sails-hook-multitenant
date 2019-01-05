@@ -3,10 +3,10 @@
 ## 1. Introduction
 Sails Multitenant ORM Project was develop to give to Waterline ORM , The main ORM implemented in Sails 1.X, the capability to use the Multi Tenant Arquitecture. 
 
-This is a not invasive method, because is a plug & play hook, made follow the hooks specification provided by sails to add a group of function that transform the traditional ORM into multitenancy ORM with full compatibility with traditional operations with a single tenant.
+This is a none invasive method, because is a plug & play hook, made to follow the hook specifications provided by sails to add a group of functions that transform the traditional ORM into a multitenancy ORM with full compatibility with traditional operations with a single tenant.
 
 
-Sails Multitanency ORM project is perfect for new app that need a multi tenant arquitecture or if you have an app that need multi tenant database operations, because you don't need modify nothing if you had made code with the traditional methods provided by Sails Framework.
+Sails Multitanency ORM project is perfect for any new app that needs a multi tenant arquitecture or if you have an app that needs multi tenant database operations, because you don't need to modify anything if you have code made with the traditional methods provided by the Sails.js Framework.
 
 Try Sails Multitenant ORM Project and put steroids in your Waterline ORM.
 
@@ -20,7 +20,7 @@ npm install sails-hook-multitenant --save
 # To install with yarn
 yarn add sails-hook-multitenant --save
 ```
-If you start from scratch and want created a new sails project with multitenant hook
+If you start from scratch and want to created a new sails project with multitenant hook
 
 ```bash
 # Create a new sails project
@@ -36,7 +36,7 @@ sails lift
 ```
 ## 3. Configuration
 
-The hook comes ready to use, but if you use the Request object to determine the tenant in the requests, you need define a tenant selector function into sails configuration folder. Use and extend the next code to write your own tenant selection function in order to use the Request Object in tenants requests.
+The hook comes ready to use, but if you use the Request object to determine the tenant in the requests, you need to define a tenant selector function into Sails configuration folder. Use and extend the next code to write your own tenant selection function in order to use the Request Object in tenants requests.
 
 ```javascript
 module.exports.multitenancy = function(req){
@@ -88,7 +88,7 @@ Save this code into sails configurtion folder with a name you want, **Example** 
 
 ## 4. How to use
 
-The hook was build thinkg in three differents uses cases. Each way to use the multi tenant hook make an datasource change by tenant. All models, that want use the multi tenant datasource should have a multitenant boolean propertie equal true defined in the Model Object in order to be multitenant model. If this propertie not exists, the hook ignore this model of  multitenant call. **An example:**
+The hook was built with three different use cases in mind. Each way to use the multi tenant hook make an datasource change by tenant. All models, that want to use the multi tenant datasource should have a multitenant boolean property equal to true `multitenant: true` defined in the Model Object in order to be a multitenant model. If this propertie does not exist, the hook ignores this model of multitenant call. **An example:**
 
 ```javascript
 /**
@@ -122,13 +122,13 @@ module.exports = {
 };
 
 ```
-If you define you model like multitenant, you have three ways to make an multitenant database calls.
+If you define you model like multitenant, you have three ways to make multitenant database calls.
 
 ### 4.1 The Request Object Way
 
-This way is based on the request object handler by each action in the controllers. Each ORM operations is call using in the first argument, the Request Object. The hook automatically recognize this object and use like argument in the **Tenant selector function** previusly configured in the Sails configuration folder.
+This way is based on the request object handler by each action in the controllers. Each ORM operations is called using the first argument, the Request Object. The hook automatically recognizes this object and uses the argument **Tenant selector function** previusly configured in the Sails configuration folder.
 
-The **Tenant selector function** return a configuration object that select and configuring the tenant. If the tenant was previsuly used, the hook dont create a new datasource of this tenant and only use this datasource previusly created.
+The **Tenant selector function** returns a configuration object that selects and configures the tenant. If the tenant was previsuly used, the hook will not create a new datasource of this tenant and only uses the datasource previusly created.
 
 An example of this, with the Client model previusly defined.
 
@@ -239,7 +239,7 @@ The result of call the controller should be:
 
 ### 4.2 The configuration Object Way
 
-This way is similar to Request Object but the selection of the tenant is handle direct from the controller. The database operations is made with the configuration datasource object all the times.
+This way is similar to Request Object but the selection of the tenant is handled directly from the controller. The database operations is made with the configuration datasource object all the time.
 
 An example of this, with the Client model previusly defined.
 
@@ -301,7 +301,7 @@ The result of call the controller should be:
 
 ### 4.3 The Datasource creation Way
 
-This way is similar to Configuration Object but the selection of the tenant is by the name of datasource. To make this posible previusly to database operation call we need add the datasource to the models. The database operations is made with the name of datasource in each operation.
+This way is similar to Configuration Object but the selection of the tenant is by the name of datasource. To make this posible previusly to database operation call we need to add the datasource to the models. The database operations is made with the name of datasource in each operation.
 
 An example of this, with the Client model previusly defined.
 
