@@ -412,7 +412,7 @@ Git: https://www.github.com/acalvoa/sails-hook-multitenant
 
 
 ## 7. Contributors
-Thanks to all beautiful people that can do this possible.
+Thanks to all people that can do this possible.
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
 | [<img src="https://avatars3.githubusercontent.com/u/26884109?s=460&v=4" width="100px;"/><br /><sub><b>Raquel</b></sub>](https://github.com/raqem)<br />[🌍](#question-kentcdodds "Answering Questions") | 
