@@ -1,7 +1,7 @@
 ![tea love](https://raw.githubusercontent.com/acalvoa/sails-hook-multitenant/master/assets/logo.png)
 
 ## 1. Introduction
-Sails Multitenant ORM Project was develop to give to Waterline ORM , The main ORM implemented in Sails 1.0, the capability to use the Multi Tenant Arquitecture. 
+Sails Multitenant ORM Project was develop to give to Waterline ORM , The main ORM implemented in Sails 1.X, the capability to use the Multi Tenant Arquitecture. 
 
 This is a not invasive method, because is a plug & play hook, made follow the hooks specification provided by sails to add a group of function that transform the traditional ORM into multitenancy ORM with full compatibility with traditional operations with a single tenant.
 
