@@ -401,7 +401,6 @@ This command should be print the follow output.
 Waterline Multitenant ORM Project
 License: MIT
 Git: https://www.github.com/acalvoa/sails-hook-multitenant
-Made with ❤ in Chile by Rockstart
 
 ==========================================================
     ✓ sails does not crash
@@ -413,11 +412,14 @@ Made with ❤ in Chile by Rockstart
 
 
 ## 7. Contributors
-Made with ❤ in Chile by Rockstart.
-Write by Angelo Calvo A (acalvoa)
-
+Thanks to all beautiful people that can do this possible.
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+| [<img src="https://avatars3.githubusercontent.com/u/26884109?s=460&v=4" width="100px;"/><br /><sub><b>Raquel</b></sub>](https://github.com/raqem)<br />[🌍](#question-kentcdodds "Answering Questions") | 
+| :---: |
 
 **Knownledge is power, share the Knownledge.**
 ## 8. License
 This project is develop by Rockstart for free use by the community, under MIT license. 
 
+Made with ❤ in Chile
