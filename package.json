@@ -1,59 +1,30 @@
 {
-  "_from": "sails-hook-multitenant@^0.5.14",
-  "_id": "sails-hook-multitenant@0.5.14",
-  "_inBundle": false,
-  "_integrity": "sha512-u44IJgMYpFzjw4LQ4GREsul1XqJJQClnjjeILNusa5AsT2LSv2zfG+cpaH17JR6uPUOE8J6wMu6YV95Cg5b5og==",
-  "_location": "/sails-hook-multitenant",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "range",
-    "registry": true,
-    "raw": "sails-hook-multitenant@^0.5.14",
-    "name": "sails-hook-multitenant",
-    "escapedName": "sails-hook-multitenant",
-    "rawSpec": "^0.5.14",
-    "saveSpec": null,
-    "fetchSpec": "^0.5.15"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/sails-hook-multitenant/-/sails-hook-multitenant-0.5.14.tgz",
-  "_shasum": "a89e0e5bc8b0ca3359bdd9a9466e9ba89330bbd8",
-  "_spec": "sails-hook-multitenant@^0.5.14",
-  "_where": "/Users/acalvo/proyectos/personal/ornitorrinco/backend",
-  "author": {
-    "name": "Angelo Calvo Alfaro",
-    "email": "angelo.calvoa@gmail.com"
-  },
-  "bugs": {
-    "url": "https://github.com/acalvoa/sails-hook-multitenant/issues"
-  },
-  "bundleDependencies": false,
-  "deprecated": false,
+  "name": "sails-hook-multitenant",
+  "version": "0.5.15",
   "description": "A multi tenancy ORM hook to transform Waterline ORM into Multitenant ORM for Sails.js 1.X",
+  "main": "index.js",
+  "sails": {
+    "isHook": true
+  },
   "devDependencies": {
     "sails": "^1.0.0-46",
     "waterline": "^0.13.4"
   },
-  "homepage": "https://github.com/acalvoa/sails-hook-multitenant#readme",
+  "license": "MIT",
   "keywords": [
-    "Sails.js",
-    "Waterline",
-    "Nodejs",
-    "ORM",
+    "Sails.js", 
+    "Waterline", 
+    "Nodejs", 
+    "ORM", 
     "Multitenant",
     "Multitenancy"
   ],
-  "license": "MIT",
-  "main": "index.js",
-  "name": "sails-hook-multitenant",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/acalvoa/sails-hook-multitenant.git"
+  "author": {
+    "name": "Angelo Calvo Alfaro",
+    "email": "angelo.calvoa@gmail.com"
   },
-  "sails": {
-    "isHook": true
-  },
-  "version": "0.5.14"
+  "repository" :
+  { "type" : "git"
+  , "url" : "https://github.com/acalvoa/sails-hook-multitenant"
+  }
 }
