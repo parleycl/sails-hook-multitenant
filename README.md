@@ -420,6 +420,6 @@ Thanks to all people that can do this possible.
 
 **Knownledge is power, share the Knownledge.**
 ## 8. License
-This project is develop by Rockstart for free use by the community, under MIT license. 
+This project is develop by Parley for free use by the community, under MIT license. 
 
 Made with ❤ in Chile
