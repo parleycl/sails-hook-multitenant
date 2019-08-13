@@ -368,12 +368,32 @@ The result of call the controller should be:
 }
 ```
 
-## 5. Examples
+## 5. Lifecycle Callbacks
+
+When you use multitenant call of model, the lifecycle callbacks can receive three parameters. The third parameter is
+request object of the http request that you can use to handle new multitenancy calls in models.
+
+```javascript
+// Create Lifecycle callbacks
+beforeCreate(newRecord, proceed, req);
+afterCreate(newRecord, proceed, req);
+
+// Update Lifecycle callbacks
+beforeUpdate(newRecord, proceed, req);
+afterCreate(newRecord, proceed, req);
+
+// Destroy Lifecycle callbacks
+beforeDestroy(newRecord, proceed, req);
+afterDestroy(newRecord, proceed, req);
+
+```
+
+## 6. Examples
 An example project for study is in the example folder. 
 
 If you have any question of how to use, or any question, please contact.
 
-## 6. Tests
+## 7. Tests
 Follow the Sails documentation, the hook is tested with mocha.
 
 ```bash
@@ -411,7 +431,7 @@ Git: https://www.github.com/acalvoa/sails-hook-multitenant
 ```
 
 
-## 7. Contributors
+## 8. Contributors
 Thanks to all people that can do this possible.
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
@@ -419,7 +439,8 @@ Thanks to all people that can do this possible.
 | :---: |
 
 **Knownledge is power, share the Knownledge.**
-## 8. License
+
+## 9. License
 This project is develop by Parley for free use by the community, under MIT license. 
 
 Made with ❤ in Chile
