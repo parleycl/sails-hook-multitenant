@@ -388,12 +388,35 @@ afterDestroy(newRecord, proceed, req);
 
 ```
 
-## 6. Examples
+## 6. Native Queries
+
+The hook support native queries in each adapters that can support sendNativeQuery Method.
+
+To use native query method in the datastore, we can use the same ways used in the ORM methods to interact with database using the three posible ways to handle multitenancy shown in this hook.
+
+To use native queries you can use this ways, if you want use request object.
+
+
+```javascript
+let QUERY = "SELECT * FROM test_table";
+
+// Using native queries from sails object, using request object
+let query = await sails.sendNativeQuery(req, QUERY);
+
+// Using native queries from model, using request object
+// Test is a declared Sails Model. 
+let query = Test.getDatastore().sendNativeQuery(req, QUERY);
+
+```
+
+If you want to use Datasource creation or Configuration object Way, you can use them like a Multi Tenancy model action, replacing request object with the with the corresponding variables.
+
+## 7. Examples
 An example project for study is in the example folder. 
 
 If you have any question of how to use, or any question, please contact.
 
-## 7. Tests
+## 8. Tests
 Follow the Sails documentation, the hook is tested with mocha.
 
 ```bash
@@ -431,7 +454,7 @@ Git: https://www.github.com/acalvoa/sails-hook-multitenant
 ```
 
 
-## 8. Contributors
+## 9. Contributors
 Thanks to all people that can do this possible.
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
@@ -440,7 +463,7 @@ Thanks to all people that can do this possible.
 
 **Knownledge is power, share the Knownledge.**
 
-## 9. License
+## 10. License
 This project is develop by Parley for free use by the community, under MIT license. 
 
 Made with ❤ in Chile
